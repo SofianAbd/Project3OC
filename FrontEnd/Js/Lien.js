@@ -22,7 +22,7 @@ function genererProjets(projets) {
         projetElement.appendChild(titleElement);
         galleryElement.appendChild(projetElement);
         console.log(titleElement.textContent);
-        document.body.appendChild(galleryElement);
+        document.querySelector('.gallery').appendChild(projetElement);
     }
 }
 
