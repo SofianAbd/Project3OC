@@ -2,17 +2,28 @@ fetch('http://localhost:5678/api/categories')
     .then(response => response.json())
     .then(data => {
         const categories = data.map(id => id.name);
-        console.log(categories);})
+        console.log(categories);});
 
-const projets = fetch('http://localhost:5678/api/works').then(projets => projets.json());
+const projetsPromise = fetch('http://localhost:5678/api/works')
+.then(response => response.json());
+      
+projetsPromise.then(projetsPromise => projets.json);
 
 function genererProjets(projets) {
     for (let i = 0; i < projets.length; i++) {
-        const projetElement = document.createElement('figure');
+        console.log(i);
+        const projetElement = document.createElement("figure");
         const titleElement = document.createElement('figcaption');
         const imageElement = document.createElement('img');
-        imageElement.src = projets[i].imageurl
+        const galleryElement = document.querySelector('.gallery');
+        imageElement.src = projets[i].imageurl;
+        titleElement.textContent = projets[i].title;
+        projetElement.appendChild(imageElement);
+        projetElement.appendChild(titleElement);
+        galleryElement.appendChild(projetElement);
+        console.log(titleElement.textContent);
+        document.body.appendChild(galleryElement);
     }
 }
 
-console.log(genererProjets(projets));
+genererProjets(projets);
