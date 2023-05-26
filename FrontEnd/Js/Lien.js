@@ -29,4 +29,10 @@ async function genererProjets() {
     }
 }
 fetchProjets();
+
 genererProjets();
+
+const boutonTous = document.querySelector("#Tous")
+const boutonObjets = document.querySelector("#Objets")
+const boutonAppartements = document.querySelector("#Appartements")
+const boutonHotelRestau = document.querySelector("#HotelRestau")
