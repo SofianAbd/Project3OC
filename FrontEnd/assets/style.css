@@ -201,3 +201,44 @@ footer nav ul {
 	padding: 9px 5px;
 }
 
+.login {
+	display: flex;
+	justify-content: center;
+	margin-top: 150px;
+}
+
+.login form h2 {
+	display: flex;
+	color: #1D6154;
+	justify-content: center;
+}
+
+.mail {
+	display: flex;
+	flex-direction: column;
+ 	margin-bottom: 30px;
+}
+
+.mdp {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 30px;
+}
+
+.login form {
+	width:400px;
+}
+
+.login form button {
+	display: flex;
+	justify-content: center;
+}
+
+.login form input {
+	height: 51px;
+}
+
+.seconnecter {
+	display: flex;
+	justify-content: center;
+}
