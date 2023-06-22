@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     let categories;
 
     async function fetchCategories() {
@@ -11,11 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    let projets
+    
     async function fetchProjets() {
         return await fetch('http://localhost:5678/api/works')
         .then(response => response.json())
-        .then(data => { projets = data});
+        .then(data => data);
     }
 
     async function genererProjets() {
@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.gallery').appendChild(projetElement);
         }
     }
-    fetchProjets();
+    let projets = await fetchProjets();
+    
 
     genererProjets();
 
@@ -88,33 +89,77 @@ document.addEventListener('DOMContentLoaded', () => {
     genererBoutons();
 
 
-    const form = document.querySelector('form');
-
-    form.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Empêche la soumission du formulaire par défaut
-
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-
-    const emailValue = emailInput.value;
-    const passwordValue = passwordInput.value;
-
-    const logs = {
-        email: emailValue,
-        password: passwordValue
-    };
-
-    console.log(logs);
-
-    let response = await fetch('http://localhost:5678/api/users/login', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(logs)
-                    })
-        console.log(response)
-        let result = await response.json();
-        console.log(result.token);
-
+    
     // Reste du code pour traiter les valeurs du formulaire, comme l'envoi des données au serveur
-});
+    const openModalButton = document.getElementById('openModal');
+    const modal = document.getElementById('modal1');
+    const projetsModal = document.getElementById('projetsModal')
+    
+    openModalButton.addEventListener('click', () => {
+        // Vérifier si l'utilisateur est authentifié en tant qu'administrateur
+        if (isAdminAuthenticated()) {
+            modal.style.display = 'flex';
+        } else {
+            console.log("Accès refusé. Vous devez être un administrateur pour accéder à cette fonctionnalité.");
+        }
+    });
+
+    function genererProjetsModal() {
+        const modalGallery = document.querySelector('.modal-gallery');
+        modalGallery.innerHTML = '';
+    
+        for (let i = 0; i < projets.length; i++) {
+            const projet = projets[i];
+            console.log(i);
+        
+            const projetElement = document.createElement('figure');
+            const imageElement = document.createElement('img');
+            const deleteIcon = document.createElement('i');
+            const iconContainer = document.createElement('span');
+            iconContainer.classList.add('icon-container');
+            deleteIcon.classList.add('delete-icon');
+            deleteIcon.classList.add('fas');
+            deleteIcon.classList.add('fa-trash-alt');
+            deleteIcon.classList.add('delete-icon-overlay');
+            deleteIcon.dataset.projetId = projet.id;
+            deleteIcon.addEventListener('click', supprimerProjet);
+
+            imageElement.src = projet.imageUrl;
+        
+            iconContainer.appendChild(deleteIcon);
+            projetElement.appendChild(imageElement);
+            projetElement.appendChild(iconContainer);
+            modalGallery.appendChild(projetElement);
+        }
+    }
+  
+
+    genererProjetsModal(); // Appeler la fonction pour générer les projets dans la modale
+
+    function openModal() {
+        const modal = document.getElementById("modal1");
+        if (modal.style.display !== "flex") {
+          modal.style.display = "flex";
+        }
+    }
+      
+      // Fonction pour fermer la modale
+    function closeModal() {
+        document.getElementById("modal1").style.display = "none";
+        }
+    
+    document.querySelector(".close").addEventListener("click", closeModal);
+    document.getElementById("openModal").addEventListener("click", openModal);
+
+    async function supprimerProjet(event) {
+        const projetId = event.target.dataset.projetId;
+        console.log("${projetId}")
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://localhost:5678/api/works/${projetId}`, {
+            method: 'DELETE',
+            headers: {Authorization:"Bearer: " + token}
+        })
+        console.log(response);
+    }
+   
 });
