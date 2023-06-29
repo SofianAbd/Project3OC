@@ -19,7 +19,7 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li>login</li>
+			<li><a href="login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -45,6 +45,28 @@
 				<span class="close">&times;</span>
 				<p>Galerie photo</p>
 				<div class="modal-gallery">
+				</div>
+				<button id="ajouterProjet">Ajouter un projet</button>
+			</div>
+		</aside>
+		<aside id="modal2" class="modal2" data-role="admin">
+			<div class="modal-wrapper2">
+				<p>Ajout photo</p>
+				<div class="ajout-wrapper">
+					<form class="">
+						<label for="image">Image :</label>
+						<input type="file" id="image" accept="image/*" required><br><br>
+						<label for="texte1">Texte 1 :</label>
+    					<input type="text" id="title" required><br><br>
+						<label for="categorie">Catégorie :</label>
+						<select id="category" required>
+						  <option value=1>Objets</option>
+						  <option value=2>Appartements</option>
+						  <option value=3>Hotels et restaurants</option>
+						</select><br><br>
+						
+						<input type="submit" value="Envoyer" id="submitBtn">
+					  </form>
 				</div>
 			</div>
 		</aside>

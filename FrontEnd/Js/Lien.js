@@ -158,8 +158,72 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch(`http://localhost:5678/api/works/${projetId}`, {
             method: 'DELETE',
             headers: {Authorization:"Bearer: " + token}
-        })
-        console.log(response);
+        });
+        if (response.status === 204) {
+            // Le projet a été supprimé avec succès
+            console.log("Projet supprimé avec succès.");
+    
+            // Rappeler les fonctions pour générer les projets
+            await fetchProjets(); // Mettre à jour les données des projets
+            location.reload();
+        } else {
+            // La suppression du projet a échoué
+            console.log("Échec de la suppression du projet.");
+        }
     }
-   
+
+const token = localStorage.getItem('token');
+if (token) {
+  const bouton = document.getElementById('openModal');
+  bouton.style.display = 'block';
+} else {
+  const bouton = document.getElementById('openModal');
+  bouton.style.display = 'none';
+}
+
+function openModal2(){
+    modal = document.querySelector("modalWrapper");
+    modal2 = document.querySelector("modalWrapper2");
+    modal.style.display = "none";
+    modal2.style.display = "flex";
+}
+
+document.getElementById("ajouterProjet").addEventListener("click", openModal2);
+
+
+function submitForm(event) {
+    event.preventDefault(); // Empêche le rechargement de la page
+    const token = localStorage.getItem('token');
+    debugger;
+    // Récupère les valeurs des champs
+    var image = document.getElementById('image').files[0];
+    var texte1 = document.getElementById('title').value;
+    var texte2 = document.getElementById('category').value;
+
+    // Crée un objet FormData pour envoyer les données
+    var formData = new FormData();
+    formData.append('image', image);
+    formData.append('title', texte1);
+    formData.append('category', texte2);
+    console.log(formData)
+
+    // Envoie la requête POST à l'API
+    fetch('http://localhost:5678/api/works', {
+      method: 'POST',
+      headers: {Authorization:"Bearer: " + token},
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Traitez la réponse de l'API ici
+      console.log(data);
+    })
+    .catch(error => {
+      // Gérez les erreurs ici
+      console.error(error);
+    });
+  }
+
+  document.getElementById('submitBtn').addEventListener('click', submitForm);
+
 });

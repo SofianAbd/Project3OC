@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const token = result.token;
         localStorage.setItem('token', token);
         console.log(token);
-        const errorElement = document.getElementById('error-message');
+        const errorElement = document.querySelector('.error-message');
 
         // ...
 

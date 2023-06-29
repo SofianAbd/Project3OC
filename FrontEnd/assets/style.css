@@ -244,6 +244,19 @@ footer nav ul {
 }
 
 .modal {
+	display:none;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	left: 0;
+  	top: 0;
+  	width: 100%;
+  	height: 100%;
+	overflow: auto;
+  	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal2 {
 	display:flex;
 	align-items: center;
 	justify-content: center;
@@ -257,6 +270,16 @@ footer nav ul {
 }
 
 .modal-wrapper {
+	display: none;
+	flex-direction: column;
+	width: 630px;
+	height:731px;
+	padding: 60px 120px;
+	background-color: white;
+
+}
+
+.modal-wrapper2 {
 	display: flex;
 	flex-direction: column;
 	width: 630px;
@@ -265,6 +288,7 @@ footer nav ul {
 	background-color: white;
 
 }
+
 
 .modal-gallery {
 	display: flex;
@@ -288,7 +312,6 @@ footer nav ul {
 	font-size: 24px;
   }
 
-  
 .icon-container {
 	position: absolute;
 	top: 0;
@@ -296,3 +319,8 @@ footer nav ul {
 	transform: translate(50%, -50%);
 	padding: 5px;
 }
+
+#openModal {
+	display: none;
+}
+
