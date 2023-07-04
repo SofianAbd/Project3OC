@@ -9,7 +9,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
 	<script src="./Js/Lien.js"></script>
 </head>
 <body>
@@ -42,30 +42,40 @@
 
 		<aside id="modal1" class="modal" data-role="admin">
 			<div class="modal-wrapper">
-				<span class="close">&times;</span>
-				<p>Galerie photo</p>
+				<span class="close"><i class="fas fa-times"></i></span>
+				<p class="galleryTitle">Galerie photo</p>
 				<div class="modal-gallery">
 				</div>
-				<button id="ajouterProjet">Ajouter un projet</button>
+				<hr>
+				<button id="ajouterProjet">Ajouter une photo</button>
+				<a href="#" id="deleteGallery">Supprimer la galerie</a>
 			</div>
 		</aside>
 		<aside id="modal2" class="modal2" data-role="admin">
 			<div class="modal-wrapper2">
-				<p>Ajout photo</p>
+				<span class="close2"><i class="fas fa-times"></i></span>
+				<p class="ajout-photo">Ajout photo</p>
 				<div class="ajout-wrapper">
 					<form class="">
-						<label for="image">Image :</label>
-						<input type="file" id="image" accept="image/*" required><br><br>
-						<label for="texte1">Texte 1 :</label>
-    					<input type="text" id="title" required><br><br>
-						<label for="categorie">Catégorie :</label>
+						<div class="input-wrapper">
+							<i class="fas fa-light fa-image"></i>
+							<button id="ajouterPhoto">
+								<input type="file" id="image" accept="image/*" class="input-file" required>
+								<label for="image" class="label-file">+ Ajouter photo</label>
+							</button>
+							<p class="imageweight">jpg, png : 4mo max</p>	
+						</div>					  
+						<label for="texte1">Titre</label><br>
+    					<input type="text" id="title" required>
+						<label for="categorie">Catégorie</label><br>
 						<select id="category" required>
-						  <option value=1>Objets</option>
-						  <option value=2>Appartements</option>
-						  <option value=3>Hotels et restaurants</option>
+							<option value="" selected></option>
+						  	<option value=1>Objets</option>
+						  	<option value=2>Appartements</option>
+						  	<option value=3>Hotels et restaurants</option>
 						</select><br><br>
-						
-						<input type="submit" value="Envoyer" id="submitBtn">
+						<hr>
+						<input type="submit" value="Valider" id="submitBtn">
 					  </form>
 				</div>
 			</div>

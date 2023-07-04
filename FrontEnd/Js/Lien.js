@@ -92,13 +92,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Reste du code pour traiter les valeurs du formulaire, comme l'envoi des données au serveur
     const openModalButton = document.getElementById('openModal');
-    const modal = document.getElementById('modal1');
-    const projetsModal = document.getElementById('projetsModal')
+    const projetsModal = document.getElementById('projetsModal');
     
     openModalButton.addEventListener('click', () => {
         // Vérifier si l'utilisateur est authentifié en tant qu'administrateur
         if (isAdminAuthenticated()) {
+            const modal = document.getElementById('modal1');
+            const modalWrapper = document.querySelector('.modal-wrapper');
             modal.style.display = 'flex';
+            modalWrapper.style.display = 'flex';
         } else {
             console.log("Accès refusé. Vous devez être un administrateur pour accéder à cette fonctionnalité.");
         }
@@ -110,12 +112,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     
         for (let i = 0; i < projets.length; i++) {
             const projet = projets[i];
-            console.log(i);
-        
+    
             const projetElement = document.createElement('figure');
             const imageElement = document.createElement('img');
             const deleteIcon = document.createElement('i');
             const iconContainer = document.createElement('span');
+            const editerElement = document.createElement('a'); // Nouvel élément de lien <a>
+    
             iconContainer.classList.add('icon-container');
             deleteIcon.classList.add('delete-icon');
             deleteIcon.classList.add('fas');
@@ -123,16 +126,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             deleteIcon.classList.add('delete-icon-overlay');
             deleteIcon.dataset.projetId = projet.id;
             deleteIcon.addEventListener('click', supprimerProjet);
-
+    
             imageElement.src = projet.imageUrl;
-        
+    
+            // Configuration du lien "éditer"
+            editerElement.textContent = 'éditer'; // Texte du lien
+            editerElement.href = '#'; // Lien vers une URL spécifique (remplacer par la bonne URL si nécessaire)
+            editerElement.addEventListener('click', () => {
+                // Logique pour l'édition du projet
+            });
+    
             iconContainer.appendChild(deleteIcon);
             projetElement.appendChild(imageElement);
             projetElement.appendChild(iconContainer);
+            projetElement.appendChild(editerElement); // Ajout du lien "éditer"
             modalGallery.appendChild(projetElement);
         }
     }
-  
 
     genererProjetsModal(); // Appeler la fonction pour générer les projets dans la modale
 
@@ -148,7 +158,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById("modal1").style.display = "none";
         }
     
+    function closeModal2() {
+        document.getElementById("modal2").style.display = "none";
+        }    
+
     document.querySelector(".close").addEventListener("click", closeModal);
+    document.querySelector(".close2").addEventListener("click", closeModal2);
     document.getElementById("openModal").addEventListener("click", openModal);
 
     async function supprimerProjet(event) {
@@ -182,10 +197,16 @@ if (token) {
 }
 
 function openModal2(){
-    modal = document.querySelector("modalWrapper");
-    modal2 = document.querySelector("modalWrapper2");
+    const modalWrapper = document.querySelector(".modal-wrapper")
+    const modal = document.querySelector(".modal");
+    const modalWrapper2 = document.querySelector(".modal-wrapper2");
+    const modal2 = document.querySelector(".modal2");
+
     modal.style.display = "none";
+    modalWrapper.style.display = "flex";
     modal2.style.display = "flex";
+    modalWrapper2.style.display = "flex";
+
 }
 
 document.getElementById("ajouterProjet").addEventListener("click", openModal2);
