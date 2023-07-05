@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = 'index.html';
         } else {
         // La combinaison utilisateur-mot de passe est incorrecte
-        errorElement.textContent = 'La combinaison utilisateur-mot de passe est incorrecte';
+        errorElement.textContent = 'Erreur dans l’identifiant ou le mot de passe';
         }
     });
 });
