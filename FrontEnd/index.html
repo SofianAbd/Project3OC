@@ -9,7 +9,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
 	<script src="./Js/Lien.js"></script>
 </head>
 <body>
@@ -28,6 +28,7 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<button href="#modal" id="openModal"><i class="fa-regular fa-pen-to-square"></i>Modifier</button>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -38,7 +39,7 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
-		<button href="#modal" id="openModal">Modifier</button>
+		
 
 		<aside id="modal1" class="modal" data-role="admin">
 			<div class="modal-wrapper">
@@ -58,7 +59,8 @@
 				<div class="ajout-wrapper">
 					<form class="">
 						<div class="input-wrapper">
-							<i class="fas fa-light fa-image"></i>
+							<img id="previewImage" src="">
+							<i class="far fa-image" id="imageIcon"></i>
 							<button id="ajouterPhoto">
 								<input type="file" id="image" accept="image/*" class="input-file" required>
 								<label for="image" class="label-file">+ Ajouter photo</label>

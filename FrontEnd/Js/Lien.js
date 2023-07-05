@@ -94,18 +94,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     const openModalButton = document.getElementById('openModal');
     const projetsModal = document.getElementById('projetsModal');
     
-    openModalButton.addEventListener('click', () => {
-        // Vérifier si l'utilisateur est authentifié en tant qu'administrateur
-        if (isAdminAuthenticated()) {
-            const modal = document.getElementById('modal1');
-            const modalWrapper = document.querySelector('.modal-wrapper');
-            modal.style.display = 'flex';
-            modalWrapper.style.display = 'flex';
+    function openModal() {
+        // Check if there is a token in the local storage
+        const token = localStorage.getItem('token');
+      
+        if (token) {
+          const modal = document.getElementById('modal1');
+          const modalWrapper = document.querySelector('.modal-wrapper');
+          modal.style.display = 'flex';
+          modalWrapper.style.display = 'flex';
         } else {
-            console.log("Accès refusé. Vous devez être un administrateur pour accéder à cette fonctionnalité.");
+          console.log("Accès refusé. Vous devez être un administrateur pour accéder à cette fonctionnalité.");
         }
-    });
+      }
+      
+    openModalButton.addEventListener('click', openModal);
 
+    
     function genererProjetsModal() {
         const modalGallery = document.querySelector('.modal-gallery');
         modalGallery.innerHTML = '';
@@ -117,15 +122,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             const imageElement = document.createElement('img');
             const deleteIcon = document.createElement('i');
             const iconContainer = document.createElement('span');
+            const iconContainer2 = document.createElement('span');
             const editerElement = document.createElement('a'); // Nouvel élément de lien <a>
-    
+            const moveIcon = document.createElement('i');
+
             iconContainer.classList.add('icon-container');
+            iconContainer2.classList.add('icon-container2');
             deleteIcon.classList.add('delete-icon');
             deleteIcon.classList.add('fas');
             deleteIcon.classList.add('fa-trash-alt');
             deleteIcon.classList.add('delete-icon-overlay');
             deleteIcon.dataset.projetId = projet.id;
             deleteIcon.addEventListener('click', supprimerProjet);
+            moveIcon.classList.add('fas');
+            moveIcon.classList.add('fa-regular');
+            moveIcon.classList.add('fa-arrows-up-down-left-right');
     
             imageElement.src = projet.imageUrl;
     
@@ -135,9 +146,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             editerElement.addEventListener('click', () => {
                 // Logique pour l'édition du projet
             });
-    
+            iconContainer2.appendChild(moveIcon);
             iconContainer.appendChild(deleteIcon);
             projetElement.appendChild(imageElement);
+            projetElement.appendChild(iconContainer2);
             projetElement.appendChild(iconContainer);
             projetElement.appendChild(editerElement); // Ajout du lien "éditer"
             modalGallery.appendChild(projetElement);
@@ -145,13 +157,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     genererProjetsModal(); // Appeler la fonction pour générer les projets dans la modale
-
-    function openModal() {
-        const modal = document.getElementById("modal1");
-        if (modal.style.display !== "flex") {
-          modal.style.display = "flex";
-        }
-    }
       
       // Fonction pour fermer la modale
     function closeModal() {
@@ -180,7 +185,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
             // Rappeler les fonctions pour générer les projets
             await fetchProjets(); // Mettre à jour les données des projets
-            location.reload();
         } else {
             // La suppression du projet a échoué
             console.log("Échec de la suppression du projet.");
@@ -215,7 +219,6 @@ document.getElementById("ajouterProjet").addEventListener("click", openModal2);
 function submitForm(event) {
     event.preventDefault(); // Empêche le rechargement de la page
     const token = localStorage.getItem('token');
-    debugger;
     // Récupère les valeurs des champs
     var image = document.getElementById('image').files[0];
     var texte1 = document.getElementById('title').value;
@@ -245,6 +248,60 @@ function submitForm(event) {
     });
   }
 
+const figureElements = document.querySelectorAll('.modal-gallery figure');
+
+figureElements.forEach((figure) => {
+  const imageElement = figure.querySelector('img');
+  const iconContainer = figure.querySelector('.icon-container2');
+
+  imageElement.addEventListener('mouseenter', () => {
+    iconContainer.style.visibility = 'visible';
+  });
+
+  imageElement.addEventListener('mouseleave', () => {
+    iconContainer.style.visibility = 'hidden';
+  });
+});
+
+
+document.addEventListener('click', (event) => {
+    const modal = document.getElementById('modal1');
+    const modalWrapper = document.querySelector('.modal-wrapper');
+    const isClickedOutsideModal = !modalWrapper.contains(event.target);
+    const isButtonClicked = event.target.id === 'openModal';
+  
+    if (isClickedOutsideModal && !isButtonClicked) {
+      modal.style.display = 'none';
+    }
+  });
+
   document.getElementById('submitBtn').addEventListener('click', submitForm);
+
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    const previewImageElement = document.getElementById('previewImage');
+    const imageIcon = document.getElementById('imageIcon');
+    const bouton = document.getElementById('ajouterPhoto');
+    const imgWeight = document.querySelector('.imageweight')
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+        previewImageElement.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+        imageIcon.style.display = "none";
+        bouton.style.display = "none";
+        imgWeight.style.display = "none";
+    }
+}
+
+// Add event listener to the file input
+const imageInput = document.getElementById('image');
+imageInput.addEventListener('change', handleFileSelect);
+
+
 
 });

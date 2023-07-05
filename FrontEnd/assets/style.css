@@ -103,11 +103,25 @@ li:hover {
 	align-items: center;
 }
 #introduction figure {
-	flex: 1
+	flex: 1;
+	display: flex;
+	flex-direction: column;
 }
+
+#openModal {
+	display: flex;
+	align-items: baseline;
+	width: 75px;
+	border:none;
+	background-color:white;
+	cursor:pointer;
+	font-size: 14px;
+	margin-top: 5px;
+}
+
+
 #introduction img {
 	display: block;
-	margin: auto;
 	width: 80%;
 }
 
@@ -197,8 +211,21 @@ footer nav ul {
 	padding: 0 5px;
 }
 
-#portfolio button {
+.filtres button {
 	padding: 9px 5px;
+	border-radius: 60px;
+	border: solid 1px #1D6154;
+	background-color: white;
+	font-size: 16px;
+	font-family: Syne;
+	color: #1D6154;
+	font-weight: 700;
+	margin: 0 3px;
+}
+
+#portfolio button:hover {
+	background-color:#1D6154;
+	color: white;
 }
 
 .login {
@@ -244,7 +271,7 @@ footer nav ul {
 }
 
 .modal {
-	display:flex;
+	display:none;
 	align-items: center;
 	justify-content: center;
 	position: fixed;
@@ -332,6 +359,27 @@ nav a {
 	border-radius:2px;
 }
 
+.icon-container2 {
+	position: absolute;
+	top: 15px;
+	right: 40px;
+	transform: translate(50%, -50%);
+	padding: 5px;
+	background-color: black;
+	border-radius:2px;
+	visibility: hidden;
+}
+
+.figure-wrapper:hover .icon-container2 {
+	visibility: visible;
+  }
+
+
+ 
+.fa-arrows-up-down-left-right {
+	color: white;
+}
+
 #openModal {
 	display: none;
 }
@@ -405,6 +453,13 @@ hr {
 	background-color:#E8F1F6;
 }
 
+#previewImage {
+	display: flex;
+	height: 100%;
+	width:auto;
+}
+
+
 .input-file {
 	display: none;
 }
@@ -474,4 +529,12 @@ hr {
 	border:none;
 	background-color: #A7A7A7;
 	align-self: center;
+}
+
+.filtres {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 50px;
+	margin-top: 50px;
 }
